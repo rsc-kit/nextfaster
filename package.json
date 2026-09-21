@@ -14,7 +14,7 @@
     "check": "tsc --noEmit && oxlint src --deny-warnings && bun test tests"
   },
   "dependencies": {
-    "@rsc-kit/core": "file:/tmp/rsc-kit-core-dev.e38f0ee.tgz",
+    "@rsc-kit/core": "^0.20.8",
     "@t3-oss/env-core": "^0.13.0",
     "lucide-react": "^1.47.0",
     "react": "^19.2.5",

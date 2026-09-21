@@ -1,0 +1,14 @@
+{
+  // Merged by Nitro into .output/server/wrangler.json at build. The bindings
+  // the app reads from cloudflare:workers; the rest the build writes.
+  "name": "nextfaster",
+  "routes": [{ "pattern": "faster.rsc-kit.dev", "custom_domain": true }],
+  "vars": { "NODE_ENV": "production" },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "nextfaster",
+      "database_id": "087ae4ff-7694-4884-8e40-ec7e07f6ee09"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "rsc-kit": {
+      "command": "bunx",
+      "args": [
+        "@rsc-kit/mcp"
+      ]
+    }
+  }
+}

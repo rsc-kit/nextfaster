@@ -1,0 +1,12 @@
+node_modules
+.output
+build
+dist
+data/*.sqlite
+data/*.sql
+data/images
+data/images.txt
+.wrangler
+.env
+.env.*
+!.env.example

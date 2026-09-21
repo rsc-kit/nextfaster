@@ -5,7 +5,7 @@
     "": {
       "name": "nextfaster",
       "dependencies": {
-        "@rsc-kit/core": "file:/tmp/rsc-kit-core-dev.e38f0ee.tgz",
+        "@rsc-kit/core": "file:/tmp/rsc-kit-core-dev.budget.tgz",
         "@t3-oss/env-core": "^0.13.0",
         "lucide-react": "^1.47.0",
         "react": "^19.2.5",
@@ -283,7 +283,7 @@
 
     "@rolldown/pluginutils": ["@rolldown/pluginutils@1.0.1", "", {}, "sha512-2j9bGt5Jh8hj+vPtgzPtl72j0yRxHAyumoo6TNfAjsLB04UtpSvPbPcDcBMxz7n+9CYB0c1GxQFxYRg2jimqGw=="],
 
-    "@rsc-kit/core": ["@rsc-kit/core@/tmp/rsc-kit-core-dev.e38f0ee.tgz", { "peerDependencies": { "@vitejs/plugin-rsc": "^0.5.0", "nuqs": ">=2.4.0", "react": "^19.2.0", "react-dom": "^19.2.0", "vite": "^8.0.0" }, "optionalPeers": ["@vitejs/plugin-rsc", "nuqs", "vite"] }, "sha512-rdq7AK7uZVV/3P+JlNEg9YFs5iRffN4xHSPjqg3arfMYBoHpfFkhyF/YVENdp4CTgrrj3FE9HOZD1LCo8DeTyw=="],
+    "@rsc-kit/core": ["@rsc-kit/core@/tmp/rsc-kit-core-dev.budget.tgz", { "peerDependencies": { "@vitejs/plugin-rsc": "^0.5.0", "nuqs": ">=2.4.0", "react": "^19.2.0", "react-dom": "^19.2.0", "vite": "^8.0.0" }, "optionalPeers": ["@vitejs/plugin-rsc", "nuqs", "vite"] }, "sha512-ijweHF07BRAqppXxYMWIiWa4RH3WmycpoZKkEDdA9k8GfJf6+4rEsPwx0M3gU14+UPLEgT8/vMKE2HCUAPGDWQ=="],
 
     "@sindresorhus/is": ["@sindresorhus/is@7.2.0", "", {}, "sha512-P1Cz1dWaFfR4IR+U13mqqiGsLFf1KbayybWwdd2vfctdV6hDpUkgCY0nKOLLTMSoRd/jJNjtbqzf13K8DCCXQw=="],
 

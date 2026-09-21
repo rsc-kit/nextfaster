@@ -1,13 +1,16 @@
 import Link from '@rsc-kit/core/Link'
+import { preload } from 'react-dom'
 import { imageProps } from '@/lib/images'
 import type { Product } from '@/db/types'
 
 /**
- * A product tile. A server component: the original made this a client
- * component to preload the product page's image from an effect. Here the
- * product page is rendered hidden on touch or a settled hover, and a hidden
- * page's images load with it - so the preload is the router's, and this
- * ships no JavaScript.
+ * A product tile. A server component that ships no JavaScript: the
+ * original made this a client component to preload the product page's
+ * picture from an effect. Here the picture is asked for from the render,
+ * through React's own preload, which becomes a <link rel="preload"> in the
+ * document's head - so it is decoded by the time the page is tapped, and
+ * the tap finds it there whether or not the page's payload was prefetched
+ * first. Only the pictures of the tiles drawn at once.
  */
 export function ProductLink({
   product,
@@ -20,6 +23,14 @@ export function ProductLink({
   subcategorySlug: string
   loading: 'eager' | 'lazy'
 }) {
+  if (loading === 'eager' && product.image_url) {
+    // The same candidates the product page's <img> offers, so the browser
+    // chooses the same one here and finds it in its cache there.
+    const { src, srcSet } = imageProps(product.image_url, 256)
+
+    preload(src, { as: 'image', imageSrcSet: srcSet })
+  }
+
   return (
     <Link
       className="group flex h-[130px] w-full flex-row border px-4 py-2 hover:bg-gray-100 sm:w-[250px]"

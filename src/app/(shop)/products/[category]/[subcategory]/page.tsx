@@ -52,8 +52,11 @@ async function SubcategoryProducts({ params }: { params: Promise<{ category: str
         <p>No products for this subcategory</p>
       )}
       <div className="flex flex-row flex-wrap gap-2">
-        {products.map((product) => (
-          <ProductLink key={product.slug} loading="eager" categorySlug={category} subcategorySlug={subcategory} product={product} />
+        {products.map((product, i) => (
+          // Eager for the tiles above the fold: each preloads its product's
+          // picture, and two dozen at once queued the tapped one behind the
+          // rest on a phone. The others load as they scroll in.
+          <ProductLink key={product.slug} loading={i < 8 ? 'eager' : 'lazy'} categorySlug={category} subcategorySlug={subcategory} product={product} />
         ))}
       </div>
     </>

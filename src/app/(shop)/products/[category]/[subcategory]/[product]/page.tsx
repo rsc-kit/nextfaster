@@ -1,7 +1,7 @@
 import type { Metadata } from '@rsc-kit/core/metadata'
 import { notFound } from '@rsc-kit/core/not-found'
 import { getProductDetails, getProductsForSubcategory } from '@/lib/queries'
-import { imageProps, imageUrl } from '@/lib/images'
+import { imageProps } from '@/lib/images'
 import { ProductLink } from '@/components/product-card'
 import { Suspense } from 'react'
 import { AddToCartForm } from '@/components/add-to-cart-form'
@@ -55,13 +55,6 @@ async function ProductDetails({ params }: { params: Promise<{ product: string; s
             height={256}
             width={256}
             className="h-56 w-56 flex-shrink-0 border-2 md:h-64 md:w-64"
-            // The tile's picture, which the tap came from and the browser
-            // already holds, drawn behind the big one until it lands. On a
-            // phone the first product page of a visit can arrive before the
-            // card's preload has: the box was blank for the 300 ms the
-            // 512 px webp took over the radio. Now it shows the small
-            // picture, soft, and sharpens. What Next calls placeholder="blur".
-            style={product.image_url ? { backgroundImage: `url(${imageUrl(product.image_url, 96)})`, backgroundSize: 'cover' } : undefined}
           />
           <p className="flex-grow text-base">{product.description}</p>
         </div>

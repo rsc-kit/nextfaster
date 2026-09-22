@@ -12,8 +12,12 @@ Live: <https://faster.rsc-kit.dev>
   `generateStaticParams`, `notFound()`, `cookies()`, `useActionState`: unchanged.
 - No image optimiser. The 2,587 images were resized once (`scripts/resize-images.sh`)
   into webp at 48, 96, 256 and 512 px and uploaded to R2 (`scripts/upload-images.sh`).
-- No `unstable_cache`. The pages that read nothing per request are stored at
-  build; the rest read D1 per request. There is no server-side data cache.
+- No `unstable_cache`, and no cache handler. The pages that read nothing per
+  request are stored at build. The catalogue reads the rest make are kept for
+  two hours - the original's figure - in the store the platform already has:
+  Cloudflare's Cache API on Workers, a Map under Bun (`src/lib/cached.ts`).
+  A store is three methods; one that spans pods is a file, not a rewrite.
+  The cart and the session are never cached.
 - No Drizzle. Twelve queries in plain SQL, `bun:sqlite` locally and D1 on Workers
   (`src/db/index.ts`).
 - The product card is a server component with no JavaScript. The original

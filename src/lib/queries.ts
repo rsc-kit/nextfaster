@@ -1,13 +1,15 @@
 /**
  * Every read the pages make. Plain SQL over the five tables; the request
- * scope's cache() keeps a read made twice in one render to one query.
+ * scope's cache() keeps a read made twice in one render to one query, and
+ * cached() keeps the catalogue's answers for two hours - see lib/cached.
  */
 
 import { cache } from '@rsc-kit/core/cache'
+import { TWO_HOURS, cached } from '@/lib/cached'
 import { db } from '@/db'
 import type { Category, Collection, Product, Subcategory, Subcollection, User } from '@/db/types'
 
-export const getCollections = cache(async () => {
+export const getCollections = cache(cached('getCollections', TWO_HOURS, async () => {
   const d = await db()
   const [collections, categories] = await Promise.all([
     d.all<Collection>('SELECT id, name, slug FROM collections ORDER BY name'),
@@ -18,9 +20,9 @@ export const getCollections = cache(async () => {
     ...collection,
     categories: categories.filter((c) => c.collection_id === collection.id),
   }))
-})
+}))
 
-export const getCollectionDetails = cache(async (slug: string) => {
+export const getCollectionDetails = cache(cached('getCollectionDetails', TWO_HOURS, async (slug: string) => {
   const d = await db()
   const collection = await d.get<Collection>('SELECT id, name, slug FROM collections WHERE slug = ?', slug)
 
@@ -32,16 +34,16 @@ export const getCollectionDetails = cache(async (slug: string) => {
   )
 
   return { ...collection, categories }
-})
+}))
 
-export const getProductCount = cache(async () => {
+export const getProductCount = cache(cached('getProductCount', TWO_HOURS, async () => {
   const d = await db()
   const row = await d.get<{ count: number }>('SELECT count(*) AS count FROM products')
 
   return row?.count ?? 0
-})
+}))
 
-export const getCategory = cache(async (slug: string) => {
+export const getCategory = cache(cached('getCategory', TWO_HOURS, async (slug: string) => {
   const d = await db()
   const category = await d.get<Category>('SELECT slug, name, collection_id, image_url FROM categories WHERE slug = ?', slug)
 
@@ -64,9 +66,9 @@ export const getCategory = cache(async (slug: string) => {
       subcategories: subcategories.filter((s) => s.subcollection_id === sc.id),
     })),
   }
-})
+}))
 
-export const getCategoryProductCount = cache(async (slug: string) => {
+export const getCategoryProductCount = cache(cached('getCategoryProductCount', TWO_HOURS, async (slug: string) => {
   const d = await db()
   const row = await d.get<{ count: number }>(
     `SELECT count(*) AS count FROM products p
@@ -77,38 +79,38 @@ export const getCategoryProductCount = cache(async (slug: string) => {
   )
 
   return row?.count ?? 0
-})
+}))
 
-export const getSubcategory = cache(async (slug: string) => {
+export const getSubcategory = cache(cached('getSubcategory', TWO_HOURS, async (slug: string) => {
   const d = await db()
 
   return d.get<Subcategory>('SELECT slug, name, subcollection_id, image_url FROM subcategories WHERE slug = ?', slug)
-})
+}))
 
-export const getProductsForSubcategory = cache(async (slug: string) => {
+export const getProductsForSubcategory = cache(cached('getProductsForSubcategory', TWO_HOURS, async (slug: string) => {
   const d = await db()
 
   return d.all<Product>(
     'SELECT slug, name, description, price, subcategory_slug, image_url FROM products WHERE subcategory_slug = ? ORDER BY slug',
     slug,
   )
-})
+}))
 
-export const getSubcategoryProductCount = cache(async (slug: string) => {
+export const getSubcategoryProductCount = cache(cached('getSubcategoryProductCount', TWO_HOURS, async (slug: string) => {
   const d = await db()
   const row = await d.get<{ count: number }>('SELECT count(*) AS count FROM products WHERE subcategory_slug = ?', slug)
 
   return row?.count ?? 0
-})
+}))
 
-export const getProductDetails = cache(async (slug: string) => {
+export const getProductDetails = cache(cached('getProductDetails', TWO_HOURS, async (slug: string) => {
   const d = await db()
 
   return d.get<Product>('SELECT slug, name, description, price, subcategory_slug, image_url FROM products WHERE slug = ?', slug)
-})
+}))
 
 /** Products by slug, each with the category its url needs. */
-export const getProductsBySlugs = cache(async (slugs: readonly string[]) => {
+export const getProductsBySlugs = cache(cached('getProductsBySlugs', TWO_HOURS, async (slugs: readonly string[]) => {
   if (slugs.length === 0) return []
 
   const d = await db()
@@ -121,7 +123,7 @@ export const getProductsBySlugs = cache(async (slugs: readonly string[]) => {
       WHERE p.slug IN (${slugs.map(() => '?').join(',')})`,
     ...slugs,
   )
-})
+}))
 
 export interface SearchHit extends Product {
   href: string

@@ -19,8 +19,17 @@ export function CategoryGrid({
       <div className="flex flex-row flex-wrap justify-center gap-2 border-b-2 py-4 sm:justify-start">
         {categories.map((category, i) => (
           <Link key={category.slug} className="flex w-[125px] flex-col items-center text-center" href={`/products/${category.slug}`}>
+            {/*
+              Eager, and low priority. Eager so the first screen's tiles are
+              asked for at once; low so they are not preloaded from the head
+              at high priority, where they competed with the document and the
+              runtime for the first paint - which is the heading, not a 2 kB
+              tile - and Lighthouse's mobile simulation counted all fifteen
+              against it.
+            */}
             <img
               loading={eagerFrom + i < 15 ? 'eager' : 'lazy'}
+              fetchPriority="low"
               decoding="sync"
               {...imageProps(category.image_url, 48)}
               alt={`A small picture of ${category.name}`}

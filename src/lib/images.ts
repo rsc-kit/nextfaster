@@ -8,14 +8,17 @@
  * the request path. `path` is what the database holds: `products/<name>`.
  */
 
-import { env } from '@/env'
+// Read straight from import.meta.env rather than through @/env: this file is
+// imported by client components, and @/env would bring its validator along.
+// src/env.ts still checks the value when the server starts.
+const IMAGES_URL: string = import.meta.env.PUBLIC_IMAGES_URL ?? 'https://images.faster.rsc-kit.dev'
 
 export type ImageSize = 48 | 96 | 256 | 512
 
 export function imageUrl(path: string | null, size: ImageSize): string {
   if (!path) return '/placeholder.svg'
 
-  return `${env.PUBLIC_IMAGES_URL}/${path}@${size}.webp`
+  return `${IMAGES_URL}/${path}@${size}.webp`
 }
 
 /** `src` and `srcSet` for an image drawn at `size` css pixels, sharp on a 2x screen. */

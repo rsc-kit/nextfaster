@@ -11,7 +11,7 @@
 // Read straight from import.meta.env rather than through @/env: this file is
 // imported by client components, and @/env would bring its validator along.
 // src/env.ts still checks the value when the server starts.
-const IMAGES_URL: string = import.meta.env.PUBLIC_IMAGES_URL ?? 'https://images.faster.rsc-kit.dev'
+const IMAGES_URL: string = import.meta.env.VITE_IMAGES_URL ?? 'https://images.faster.rsc-kit.dev'
 
 export type ImageSize = 48 | 96 | 256 | 512
 

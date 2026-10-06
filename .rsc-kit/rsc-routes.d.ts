@@ -36,5 +36,8 @@ declare module '@rsc-kit/core/routes' {
   interface RegisterApi {
     apis:
       | "/api/search"
+    events: {
+      "/api/search": EventsExportOf<typeof import("../src/app/api/search/route")>
+    }
   }
 }
